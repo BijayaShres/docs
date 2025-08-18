@@ -14,7 +14,7 @@ We've engineered Tuva to allow you to map non-standard codes and descriptions to
 ## 1. Map Data to Input Layer
 
 The input layer and core data tables have two sets of columns to define the code associated with each record: the 
-source columns, and the normalized columns.  The `condition`, `procedure`, `lab_result`, and `observation` tables all have `source_code_type`, `source_code`, and `source_description` columns, as well as `normalized_code_type`, 
+source columns, and the normalized columns.  The `condition`, `procedure`, `immunization`, `lab_result`, and `observation` tables all have `source_code_type`, `source_code`, and `source_description` columns, as well as `normalized_code_type`, 
 `normalized_code`, and `normalized_description` columns.  The `medication` table has the same source columns, and 
 separate normalized columns for `ndc_code` and `ndc_description`, `rxnorm_code` and `rxnorm_description`, 
 and `atc_code` and `atc_description`.
@@ -28,7 +28,7 @@ regardless of if they are valid, and persist those values through to core. Each 
 
 ## 2. Get Unmapped Codes
 
-Tuva has a built-in process for integrating custom maps to standardized terminologies, which can be configured through an optional `enable_normalize_engine` var in the tuav project.  The first step is to produce a list of unmapped codes.  Setting `enable_normalize_engine: unmapped` in dbt_project.yml will enable a new `normalize` mart in the tuva project.  This mart will initially contain an `all_unmapped` table that has all of the unmapped codes across all domains, as well as individual `unmapped_condition`,`unmapped_procedure`, `unmapped_medication`, `unmapped_lab_result`, and `unmapped_observations` tables.  These tables will contain a list of codes that weren't able to be automatically mapped and weren't manually mapped to normalized codes, as well as counts and a list of domains the codes appear in, and other columns to support the mapping process.
+Tuva has a built-in process for integrating custom maps to standardized terminologies, which can be configured through an optional `enable_normalize_engine` var in the tuav project.  The first step is to produce a list of unmapped codes.  Setting `enable_normalize_engine: unmapped` in dbt_project.yml will enable a new `normalize` mart in the tuva project.  This mart will initially contain an `all_unmapped` table that has all of the unmapped codes across all domains, as well as individual `unmapped_condition`,`unmapped_procedure`,`unmapped_immunization`, `unmapped_medication`, `unmapped_lab_result`, and `unmapped_observations` tables.  These tables will contain a list of codes that weren't able to be automatically mapped and weren't manually mapped to normalized codes, as well as counts and a list of domains the codes appear in, and other columns to support the mapping process.
 
 Note that one source of false positives is hcpcs level 1 or CPT codes.  Due to licensing restrictions from the AMA,
 Tuva isn't able to include a dictionary to validate CPT codes, so hcpcs codes will only be evaluated against a hcpcs level 2 dictionary.
